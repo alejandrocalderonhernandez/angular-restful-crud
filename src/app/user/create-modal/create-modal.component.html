@@ -1,0 +1,57 @@
+<!-- <h1 mat-dialog-title>Hi {{data.name}}</h1>
+<div mat-dialog-content>
+  <p>What's your favorite animal?</p>
+  <mat-form-field>
+    <mat-label>Favorite Animal</mat-label>
+    <input matInput >
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
+</div> -->
+
+
+<h1 mat-dialog-title>New user</h1>
+
+<div mat-dialog-content>
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit(userForm.value)" class="form">
+
+    <mat-form-field class="form-element">
+      <input matInput placeholder="First name" formControlName="firstName">
+      <mat-error *ngIf="!userForm.controls['firstName'].valid && userForm.controls['firstName'].touched">
+        {{errorMessage}}
+      </mat-error>
+    </mat-form-field>
+  
+    <mat-form-field class="form-element">
+      <input matInput placeholder="Last Name" formControlName="lastName">
+      <mat-error *ngIf="!userForm.controls['lastName'].valid && userForm.controls['lastName'].touched">
+        {{errorMessage}}
+      </mat-error>
+    </mat-form-field>
+  
+    <mat-form-field class="form-element">
+      <input matInput placeholder="Email" formControlName="email">
+      <mat-error *ngIf="!userForm.controls['email'].valid && userForm.controls['email'].touched">
+        {{getEmailError()}}
+      </mat-error>
+    </mat-form-field>
+  
+    <mat-form-field class="form-element">
+      <mat-label>Choose a job</mat-label>
+      <mat-select formControlName="job">
+        <mat-option value="option1">Option 1</mat-option>
+        <mat-option value="option2">Option 2</mat-option>
+        <mat-option value="option3">Option 3</mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+    <div mat-dialog-actions>
+      <button mat-button (click)="onCancel()">Cancel</button>
+      <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!userForm.valid">Create</button>
+    </div>
+  
+  </form>  
+</div>
+
