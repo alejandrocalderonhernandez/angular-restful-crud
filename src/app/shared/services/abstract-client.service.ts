@@ -7,7 +7,7 @@ export abstract class AbstractClientService<T> {
   constructor( protected client: HttpClient, protected resource: string ) { }
 
   public findByPage(page: number): Observable<T> {
-    const endpoint = `${environment.baseUrl}${this.resource}${page}`;
+    const endpoint = `${environment.baseUrl}${this.resource}`;
     const params = new HttpParams();
     params.set('page', page.toString());
     return this.client.get<T>(endpoint, {params});

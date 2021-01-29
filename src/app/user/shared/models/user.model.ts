@@ -1,14 +1,11 @@
-export class User {
+import { UserModel } from './user.model.abstract';
 
+export class User implements UserModel {
     constructor(
         public id: number,
-        public firstame?: string,
-        public lastName?: string,
-        public email?: string,
-        public job?: string,
-        public photo?: string,
-        public createAt?: string
-    ) {
-
-    }
+        public email: string,
+        public first_name: string,
+        public last_name: string,
+        public photo: string
+    ) { }
 }

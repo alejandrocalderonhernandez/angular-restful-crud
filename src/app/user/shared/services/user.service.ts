@@ -1,5 +1,5 @@
+import { Response } from './../models/response.model';
 import { HttpClient } from '@angular/common/http';
-import { User } from './../models/user.model';
 import { Injectable } from '@angular/core';
 import { AbstractClientService } from '../../../shared/services/abstract-client.service'
 
@@ -7,7 +7,7 @@ import { AbstractClientService } from '../../../shared/services/abstract-client.
   providedIn: 'root'
 })
 
-export class UserService extends AbstractClientService<User>{
+export class UserService extends AbstractClientService<Response>{
 
   constructor( protected client: HttpClient) {
     super(client, '/');

@@ -1,3 +1,4 @@
+import { User } from './../shared/models/user.model';
 import { UserService } from './../shared/services/user.service';
 import { UserModel } from '../shared/models/user.model.abstract';
 import { CreateModalComponent } from './../create-modal/create-modal.component';
@@ -17,7 +18,9 @@ export class UsersComponent implements OnInit {
   public editIcon: IconDefinition;
   public deleteIcon: IconDefinition;
   public addIcon: IconDefinition;
-  
+  public users:Array<User>;
+  public dataSource: MatTableDataSource<UserModel>;
+
   resultsLength = 0;
   animal: string;
   name: string;
@@ -30,16 +33,23 @@ export class UsersComponent implements OnInit {
     this.editIcon = faUserEdit;
     this.deleteIcon = faTrash;
     this.addIcon = faPlus;
+    this.users = new Array();
    }
 
   ngOnInit(): void {
-    this.toastr.success('Hello world!', 'Toastr fun!');
-    this.toastr.error('Hello world!', 'Toastr fun!');
-    this.httpService.findByPage(1).subscribe(r => console.log(r.lastName));
+    this.httpService.findByPage(1).subscribe(r => {
+      r.data.forEach(u => this.users.push(u));
+      if(this.users.length > 0) {
+        this.toastr.success('Load data success!', '');
+        this.dataSource = new MatTableDataSource(this.users);
+      } else {
+        this.toastr.error('Error in service', '');
+      }
+    });
   }
 
-  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'actions'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  displayedColumns: Array<string> = ['id', 'firstName', 'lastName', 'email', 'actions'];
+  
 
   applyFilter(event: Event) {
 
@@ -59,17 +69,5 @@ export class UsersComponent implements OnInit {
   
 }
 
-const ELEMENT_DATA: UserModel[] = [
-  {id: 1, firstName: "Test", lastName: 'Test2', email:'some@email.com'},
-  {id: 1, firstName: "Test", lastName: 'Test2', email:'some@email.com'},
-  {id: 1, firstName: "Test", lastName: 'Test2', email:'some@email.com'},
-  {id: 1, firstName: "Test", lastName: 'Test2', email:'some@email.com'},
-  {id: 1, firstName: "Test", lastName: 'Test2', email:'some@email.com'},
-  {id: 1, firstName: "Test", lastName: 'Test2', email:'some@email.com'},
-  {id: 1, firstName: "Test", lastName: 'Test2', email:'some@email.com'},
-  {id: 1, firstName: "Test", lastName: 'Test2', email:'some@email.com'},
-  {id: 1, firstName: "Test", lastName: 'Test2', email:'some@email.com'},
-  {id: 1, firstName: "Test", lastName: 'Test2', email:'some@email.com'}
-];
 
 
