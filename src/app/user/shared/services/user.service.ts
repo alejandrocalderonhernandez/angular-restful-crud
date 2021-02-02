@@ -8,8 +8,8 @@ import { AbstractClientService } from '../../../shared/services/abstract-client.
 })
 
 export class UserService extends AbstractClientService<Response>{
-
-  constructor( protected client: HttpClient) {
+ 
+  constructor( protected client: HttpClient ) {
     super(client, '/');
   }
 }

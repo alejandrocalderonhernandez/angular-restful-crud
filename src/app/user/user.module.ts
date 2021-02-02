@@ -15,6 +15,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { HttpClientModule } from '@angular/common/http';
+import { MatCardModule } from '@angular/material/card';
 import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -27,12 +28,14 @@ import { ToastrModule } from 'ngx-toastr';
     CommonModule,
     FontAwesomeModule,
     ReactiveFormsModule,
+    RouterModule,
     HttpClientModule,
     MatButtonModule,
     MatTableModule,
     MatFormFieldModule,
     MatPaginatorModule,
     MatInputModule,
+    MatCardModule,
     MatDialogModule,
     MatSelectModule,
     ToastrModule.forRoot(),

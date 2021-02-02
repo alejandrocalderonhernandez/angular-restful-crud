@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { faUserEdit, faTrash, IconDefinition, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-users',
@@ -18,8 +19,12 @@ export class UsersComponent implements OnInit {
   public editIcon: IconDefinition;
   public deleteIcon: IconDefinition;
   public addIcon: IconDefinition;
+  public pageSize: number;
+  public totalRecords: number;
+  public pageIndex: number;
   public users:Array<User>;
   public dataSource: MatTableDataSource<UserModel>;
+  public displayedColumns: Array<string>;
 
   resultsLength = 0;
   animal: string;
@@ -34,11 +39,25 @@ export class UsersComponent implements OnInit {
     this.deleteIcon = faTrash;
     this.addIcon = faPlus;
     this.users = new Array();
+    this.displayedColumns = ['id', 'firstName', 'lastName', 'email', 'actions'];
    }
 
   ngOnInit(): void {
-    this.httpService.findByPage(1).subscribe(r => {
+    const firstPage = 1;
+    this.findByPage(firstPage);
+  }
+
+  findByPage(page: number): void {
+    if(this.users.length > 0) {
+      this.users = [];
+    }
+    this.httpService.findByPage(page).subscribe(r => {
       r.data.forEach(u => this.users.push(u));
+      if(this.totalRecords === undefined) {
+        this.totalRecords = r.total;
+        this.pageSize = r.per_page;
+        this.pageIndex = r.page-1;
+      }
       if(this.users.length > 0) {
         this.toastr.success('Load data success!', '');
         this.dataSource = new MatTableDataSource(this.users);
@@ -48,10 +67,11 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  displayedColumns: Array<string> = ['id', 'firstName', 'lastName', 'email', 'actions'];
+  public onPageChange(page: PageEvent): void {
+    this.findByPage(page.pageIndex + 1);
+  }
   
-
-  applyFilter(event: Event) {
+  applyFilter(event: Event): void {
 
   }
 

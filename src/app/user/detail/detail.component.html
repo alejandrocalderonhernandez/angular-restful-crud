@@ -1,1 +1,24 @@
-<p>detail works!</p>
+<div class="container">
+    <div class="box-details">
+        <mat-card class="example-card">
+            <mat-card-header>
+              <div mat-card-avatar class="example-header-image"></div>
+              <mat-card-title>{{userDetail.data.first_name}}</mat-card-title>
+              <mat-card-subtitle>{{userDetail.data.last_name}}</mat-card-subtitle>
+            </mat-card-header>
+                <img mat-card-image [src]="userDetail.data.avatar">
+            <mat-card-content>
+                <fa-icon [icon]="emailIcon"></fa-icon> <span>   {{userDetail.data.email}}</span>
+                <br>
+                <fa-icon [icon]="jobIcon"></fa-icon> <span>   fullstack</span>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button color="primary" class="block" routerLink="/user">
+                    <fa-icon [icon]="backIcon" size="lg"></fa-icon>
+                    Back
+                </button>
+              </mat-card-actions>
+          </mat-card>
+    </div>
+</div>
+
