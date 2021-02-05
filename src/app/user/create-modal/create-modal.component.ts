@@ -1,3 +1,4 @@
+import { User } from './../shared/models/user.model';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from './../shared/services/user.service';
 import { jobs } from './../shared/models/jobs.enum';
@@ -14,30 +15,37 @@ export class CreateModalComponent implements OnInit {
   public userForm: FormGroup;
   public errorMessage: string;
   public jobs: Array<string>
+  public user: User;
+  public title: string;
 
   constructor(
     private formBuilder: FormBuilder,
     private httpClient: UserService,
     private toastr: ToastrService,
     public dialogRef: MatDialogRef<CreateModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
+    @Inject(MAT_DIALOG_DATA) public data: DialogDataPayload
   ) {
     this.errorMessage = 'This field is required, max 15 characters'
     this.jobs = new Array();
     this.setJobs();
+    this.title = 'New user';
   }
 
   ngOnInit(): void {
+    if(!this.data.newUser) {
+      this.user = this.data.payload;
+      this.title = 'Update';
+    }
     this.buildForm();
   }
 
-  buildForm(): void {
-    this.userForm = this.formBuilder.group({
-      'firstName': [null, Validators.required, Validators.maxLength(15)],
-      'lastName': [null, Validators.required, Validators.maxLength(15)],
-      'email': [null, [Validators.required, Validators.email]],
-      'job': [null]
-    });
+   buildForm(): void { 
+     this.userForm = this.formBuilder.group({
+       'firstName': [(this.data.newUser) ? null : this.user.first_name, [Validators.required, Validators.maxLength(15)]],
+       'lastName': [(this.data.newUser) ? null: this.user.last_name, [Validators.required, Validators.maxLength(15)]],
+       'email': [(this.data.newUser) ? null: this.user.email, [Validators.required, Validators.email]],
+       'job': [null]
+     });
   }
 
   getEmailError(): string {
@@ -45,12 +53,22 @@ export class CreateModalComponent implements OnInit {
   }
 
   onSubmit(user: any): void {
-    console.log(user);
-    this.httpClient.create(user).subscribe(u => this.toastr.success('User created successful', ''));
+    if(this.data.newUser) {
+      this.httpClient.create(user).subscribe(
+        u => this.toastr.success('User created successful', ''), 
+        e => console.log(e)
+      );
+    } else {
+      this.httpClient.update(this.user.id, user).subscribe(
+        u => this.toastr.success('User updated successful', ''),
+        e => console.log(e)
+      );
+    }
     this.dialogRef.close();
   }
 
   onCancel(): void {
+    this.toastr.info('Modal closed', '')
     this.dialogRef.close();
   }
 
@@ -59,8 +77,7 @@ export class CreateModalComponent implements OnInit {
   }
 }
 
-
-export interface DialogData {
-  animal: string;
-  name: string;
+export interface DialogDataPayload {
+  payload: User
+  newUser: boolean
 }

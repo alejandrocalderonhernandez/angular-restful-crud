@@ -10,7 +10,7 @@
         </mat-form-field>
       </div>
       <div class="col-md-1">
-        <button mat-mini-fab color="basic" class="add-button" (click)="openDialog()">
+        <button mat-mini-fab color="basic" class="add-button" (click)="createOpenDialog()">
           <fa-icon [icon]="addIcon"></fa-icon>
         </button> 
       </div>
@@ -54,7 +54,7 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Actions </th>
       <td mat-cell *matCellDef="let element"> 
-        <button mat-mini-fab color="primary" (click)="getRecord(element.name)">
+        <button mat-mini-fab color="primary" (click)="editOpenDialog(element)">
           <fa-icon [icon]="editIcon"></fa-icon>
         </button> 
         <button mat-mini-fab color="warn" (click)="getRecord(element.name)" class="left-button">

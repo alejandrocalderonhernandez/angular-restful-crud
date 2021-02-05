@@ -27,8 +27,6 @@ export class UsersComponent implements OnInit {
   public displayedColumns: Array<string>;
 
   resultsLength = 0;
-  animal: string;
-  name: string;
 
   constructor(
     private httpService: UserService, 
@@ -75,15 +73,23 @@ export class UsersComponent implements OnInit {
 
   }
 
-  openDialog(): void {
+  createOpenDialog(): void {
     const dialogRef = this.dialog.open(CreateModalComponent, {
       width: '250px',
-      data: {name: this.name, animal: this.animal}
+      data: {user: null, newUser: true}
     });
-
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.animal = result;
+    });
+  }
+
+  editOpenDialog(user: User): void {
+    const dialogRef = this.dialog.open(CreateModalComponent, {
+      width: '250px',
+      data: {payload: user, newUser: false}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
     });
   }
   

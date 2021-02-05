@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>New user</h1>
+<h1 mat-dialog-title>{{title}}</h1>
 
 <div mat-dialog-content>
   <form [formGroup]="userForm" (ngSubmit)="onSubmit(userForm.value)" class="form">
@@ -34,8 +34,9 @@
     </mat-form-field>
   
     <div mat-dialog-actions>
-      <button mat-button (click)="onCancel()">Cancel</button>
-      <button mat-raised-button color="primary" type="submit" class="button">Create</button>
+      <button mat-button type="button" (click)="onCancel()">Cancel</button>
+      <button *ngIf= "data.newUser" mat-raised-button color="primary" type="submit" class="button">Create</button>
+      <button *ngIf= "!data.newUser" mat-raised-button color="primary" type="submit" class="button">Update</button>
     </div>
   
   </form>  
