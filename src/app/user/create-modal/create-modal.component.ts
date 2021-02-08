@@ -53,15 +53,16 @@ export class CreateModalComponent implements OnInit {
   }
 
   onSubmit(user: any): void {
+    console.log(this.userForm.valid);
     if(this.data.newUser) {
       this.httpClient.create(user).subscribe(
         u => this.toastr.success('User created successful', ''), 
-        e => console.log(e)
+        e => this.toastr.error(e.message, '')
       );
     } else {
       this.httpClient.update(this.user.id, user).subscribe(
         u => this.toastr.success('User updated successful', ''),
-        e => console.log(e)
+        e => this.toastr.error(e.message, '')
       );
     }
     this.dialogRef.close();

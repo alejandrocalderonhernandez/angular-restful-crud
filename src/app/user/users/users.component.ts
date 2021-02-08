@@ -1,3 +1,4 @@
+import { DeleteModalComponent } from './../delete-modal/delete-modal.component';
 import { User } from './../shared/models/user.model';
 import { UserService } from './../shared/services/user.service';
 import { UserModel } from '../shared/models/user.model.abstract';
@@ -5,9 +6,10 @@ import { CreateModalComponent } from './../create-modal/create-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { faUserEdit, faTrash, IconDefinition, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faUserEdit, faTrash, IconDefinition, faPlus, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import { ToastrService } from 'ngx-toastr';
 import { PageEvent } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users',
@@ -26,12 +28,11 @@ export class UsersComponent implements OnInit {
   public dataSource: MatTableDataSource<UserModel>;
   public displayedColumns: Array<string>;
 
-  resultsLength = 0;
-
   constructor(
     private httpService: UserService, 
+    private router: Router,
     private toastr: ToastrService, 
-    public dialog: MatDialog ) 
+    public dialog: MatDialog) 
   {
     this.editIcon = faUserEdit;
     this.deleteIcon = faTrash;
@@ -65,12 +66,17 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  public onPageChange(page: PageEvent): void {
+  onPageChange(page: PageEvent): void {
     this.findByPage(page.pageIndex + 1);
   }
   
-  applyFilter(event: Event): void {
-
+  findById(value: any): void {
+    let id = parseInt(value.target.value);
+    if(id) {
+      this.router.navigate(['/user', id]);
+    } else {
+      this.toastr.error('The id should be type number')
+    }
   }
 
   createOpenDialog(): void {
@@ -93,6 +99,16 @@ export class UsersComponent implements OnInit {
     });
   }
   
+  deleteOpenDialog(id: number): void {
+    const dialogRef = this.dialog.open(DeleteModalComponent, {
+      width: '230px',
+      data: {id: id}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
 }
 
 

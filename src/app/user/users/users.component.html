@@ -6,7 +6,7 @@
       <div class="col-md-11">
         <mat-form-field>
           <mat-label>Filter</mat-label>
-          <input matInput (keyup)="applyFilter($event)" placeholder="Search by id" #input>
+          <input matInput (keydown.enter)="findById($event)" placeholder="Search by id" #input>
         </mat-form-field>
       </div>
       <div class="col-md-1">
@@ -57,7 +57,7 @@
         <button mat-mini-fab color="primary" (click)="editOpenDialog(element)">
           <fa-icon [icon]="editIcon"></fa-icon>
         </button> 
-        <button mat-mini-fab color="warn" (click)="getRecord(element.name)" class="left-button">
+        <button mat-mini-fab color="warn" (click)="deleteOpenDialog(element.id)" class="left-button">
           <fa-icon [icon]="deleteIcon"></fa-icon>
         </button> 
       </td>

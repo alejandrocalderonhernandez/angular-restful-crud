@@ -17,12 +17,13 @@ import { MatSelectModule } from '@angular/material/select';
 import { HttpClientModule } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 import { ToastrModule } from 'ngx-toastr';
+import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 
 @NgModule({
   declarations: [
     UsersComponent, 
     DetailComponent, 
-    CreateModalComponent
+    CreateModalComponent, DeleteModalComponent
   ],
   imports: [
     CommonModule,
