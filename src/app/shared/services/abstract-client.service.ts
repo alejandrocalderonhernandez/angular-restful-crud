@@ -9,7 +9,7 @@ export abstract class AbstractClientService<T> {
   public findByPage(page: number): Observable<T> {
     const endpoint = `${environment.baseUrl}${this.resource}`;
     const params = new HttpParams().set('page', page.toString());
-    return this.client.get<T>(endpoint, {params});
+    return this.client.get<T>(endpoint, {params}); 
   }
 
   public findById(id: number): Observable<T> {

@@ -11,5 +11,5 @@ export class UserDetailsService extends AbstractClientService<ResponseDetail> {
   constructor( protected client: HttpClient ) {
     super(client, '/');
   }
-  
+
 }

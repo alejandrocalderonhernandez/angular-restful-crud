@@ -3,6 +3,6 @@ import { Support } from './support.model';
 
 export class ResponseDetail {
     constructor(public data: User, 
-                public suport: Support
+                public suport?: Support
     ) { }
 }
