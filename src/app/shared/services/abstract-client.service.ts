@@ -17,14 +17,14 @@ export abstract class AbstractClientService<T> {
     return this.client.get<T>(endpoint);
   }
 
-  public create(resource: T): Observable<T> {
+  public create(object: T): Observable<T> {
     const endpoint = `${environment.baseUrl}${this.resource}`;
-    return this.client.post<T>(endpoint, resource);
+    return this.client.post<T>(endpoint, object);
   }
 
-  public update(id: number, resource: T): Observable<T> {
+  public update(id: number, object: T): Observable<T> {
     const endpoint = `${environment.baseUrl}${this.resource}${id}`;
-    return this.client.put<T>(endpoint, resource);
+    return this.client.put<T>(endpoint, object);
   }
   
   public delete(id: number): Observable<void> {

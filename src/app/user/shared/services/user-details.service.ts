@@ -9,7 +9,7 @@ import { AbstractClientService } from 'src/app/shared/services/abstract-client.s
 export class UserDetailsService extends AbstractClientService<ResponseDetail> {
 
   constructor( protected client: HttpClient ) {
-    super(client, '/');
+    super(client, 'users/');
   }
 
 }
