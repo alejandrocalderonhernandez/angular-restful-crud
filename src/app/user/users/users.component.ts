@@ -71,8 +71,12 @@ export class UsersComponent implements OnInit {
   }
   
   findById(value: any): void {
+    if(value === undefined || value === null) {
+      this.toastr.error('The id cant be undefined')
+      return;
+    }
     let id = parseInt(value.target.value);
-    if(id) {
+    if(!isNaN(id)) {
       this.router.navigate(['/user', id]);
     } else {
       this.toastr.error('The id should be type number')
